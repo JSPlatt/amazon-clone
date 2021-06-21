@@ -1,8 +1,10 @@
 import { useElements, useStripe, CardElement } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
+import CurrencyFormat from 'react-currency-format'
 import { Link } from 'react-router-dom'
 import CheckoutProduct from './CheckoutProduct'
 import './Payment.css'
+import { getBasketTotal } from './reducer'
 import { useStateValue } from './StateProvider'
 
 function Payment() {
@@ -71,7 +73,22 @@ function Payment() {
                     {/* Stripe */}
                     <form onSubmit={handleSubmit}>
                         <CardElement onChange={handleChange}/>
+                        <div className='payment__priceContainer'>
+                            <CurrencyFormat
+                                renderText={(value) => (
+                                    <>
+                                        <h3>Order Total: {value}</h3> 
+                                    </>
+                                )}
+                                decimalScale={2}
+                                value={getBasketTotal(basket)}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                            />
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
