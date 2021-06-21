@@ -7,11 +7,13 @@ import './Payment.css'
 import { getBasketTotal } from './reducer'
 import { useStateValue } from './StateProvider'
 import axios from './axios'
+import { db } from './firebase'
 
 function Payment() {
     const [{ basket, user}, dispatch] =useStateValue()
     const stripe = useStripe()
     const elements = useElements()
+
     const [error, setError] = useState(null)
     const [disabled, setDisabled] = useState(true)
     const [succeeded, setSucceeded] = useState(false)
@@ -31,6 +33,8 @@ function Payment() {
 
         getClientSecret()
     }, [basket])
+
+    console.log('The Secret is >>>', clientSecret)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
