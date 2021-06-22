@@ -25,7 +25,7 @@ function Payment() {
         
         const getClientSecret = async () => {
             const response = await axios({
-                method: 'post',
+                method: 'POST',
                 url:`/payments/create?total=${getBasketTotal(basket) * 100}` 
             })
             setClientSecret(response.data.clientSecret)
@@ -45,6 +45,8 @@ function Payment() {
                 card: elements.getElement(CardElement)
             }
         }).then(({ paymentIntent }) => {
+
+
             setSucceeded(true)
             setError(null)
             setProcessing(false)
@@ -53,7 +55,7 @@ function Payment() {
         })
     }
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         setDisabled(e.empty)
         setError(e.error ? e.error.message : "")
     }
